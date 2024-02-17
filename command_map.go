@@ -3,34 +3,71 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
-	"net/http"
+
+	"github.com/mahalel/pokedex/internal/pokeapi"
 )
 
+var poke_api_next string = "https://pokeapi.co/api/v2/location"
+var poke_api_prev string
+
 func commandMap() error {
+	if poke_api_next == "" {
+		fmt.Println("No more locations available, please go backwards.")
+		return nil
+	}
 
-	res, err := http.Get("http://www.google.com/robots.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	body, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
+	res, err := pokeapi.GetLocations(poke_api_next)
+
 	cnf := Config{}
-	err = json.Unmarshal(body, &cnf)
+	err = json.Unmarshal(res, &cnf)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(cnf)
+	for _, i := range cnf.Results {
+		fmt.Println(i.Name)
+	}
 
-	// make a call to an api and display the result
-	// 20 locations at a time
+	if cnf.Next != nil {
+		poke_api_next = *cnf.Next
+	} else {
+		poke_api_next = ""
+	}
 
-	// if you're on the last page, next should print an error
-	// at the end next = null
+	if cnf.Previous != nil {
+		poke_api_prev = *cnf.Previous
+	} else {
+		poke_api_prev = ""
+	}
+
+	return nil
+}
+
+func commandMapBack() error {
+	if poke_api_prev == "" {
+		fmt.Println("No more locations available, please go forward.")
+		return nil
+	}
+
+	res, err := pokeapi.GetLocations(poke_api_prev)
+
+	cnf := Config{}
+	err = json.Unmarshal(res, &cnf)
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, i := range cnf.Results {
+		fmt.Println(i.Name)
+	}
+
+	poke_api_next = poke_api_prev
+
+	if cnf.Previous != nil {
+		poke_api_prev = *cnf.Previous
+	} else {
+		poke_api_prev = ""
+	}
+
 	return nil
 }
 

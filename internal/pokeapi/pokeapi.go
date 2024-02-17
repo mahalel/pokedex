@@ -6,10 +6,8 @@ import (
 	"net/http"
 )
 
-const poke_api_location string = "https://pokeapi.co/api/v2/location"
-
-func getUrl() []byte {
-	res, err := http.Get(poke_api_location)
+func GetLocations(url string) ([]byte, error) {
+	res, err := http.Get(url)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -23,9 +21,5 @@ func getUrl() []byte {
 	}
 	// fmt.Printf("%s", body)
 
-	return body
-}
-
-func Unmarshal(data []byte, v interface{}) error {
-
+	return body, nil
 }
