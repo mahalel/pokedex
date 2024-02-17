@@ -9,8 +9,9 @@ import (
 func GetLocations(url string) ([]byte, error) {
 	res, err := http.Get(url)
 	if err != nil {
-		log.Fatal(err)
+		return make([]byte, 0), err
 	}
+
 	body, err := io.ReadAll(res.Body)
 	res.Body.Close()
 	if res.StatusCode > 299 {

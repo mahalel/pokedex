@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 
 	"github.com/mahalel/pokedex/internal/pokeapi"
 )
@@ -18,12 +17,16 @@ func commandMap() error {
 	}
 
 	res, err := pokeapi.GetLocations(poke_api_next)
+	if err != nil {
+		return err
+	}
 
 	cnf := Config{}
 	err = json.Unmarshal(res, &cnf)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
+
 	for _, i := range cnf.Results {
 		fmt.Println(i.Name)
 	}
@@ -50,12 +53,16 @@ func commandMapBack() error {
 	}
 
 	res, err := pokeapi.GetLocations(poke_api_prev)
+	if err != nil {
+		return err
+	}
 
 	cnf := Config{}
 	err = json.Unmarshal(res, &cnf)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
+
 	for _, i := range cnf.Results {
 		fmt.Println(i.Name)
 	}
