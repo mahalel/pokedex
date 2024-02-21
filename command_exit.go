@@ -1,10 +1,8 @@
 package main
 
-import (
-	"os"
-)
+import "os"
 
-func commandExit() error {
+func commandExit(cfg *config) error {
 	os.Exit(0)
 	return nil
 }
