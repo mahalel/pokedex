@@ -16,4 +16,5 @@ type Cache struct {
 	data     map[string]cacheEntry
 	mu       sync.Mutex
 	interval time.Duration
+	ticker   *time.Ticker
 }
