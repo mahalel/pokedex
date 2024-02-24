@@ -2,13 +2,14 @@ package pokeapi
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 )
 
 // ListLocations -
 func (c *Client) ListLocations(pageURL *string) (RespShallowLocations, error) {
-	url := baseURL + "/location-area"
+	url := fmt.Sprintf("%s/location-area", baseURL)
 	if pageURL != nil {
 		url = *pageURL
 	}

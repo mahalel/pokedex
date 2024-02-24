@@ -30,8 +30,7 @@ func (c *Cache) Add(key string, value []byte) {
 }
 
 // Get - function will return a key and its value from the cache if it exists
-// It will use a mutex to lock the cache while we are getting a key
-// It will defer the unlock
+// It will use a mutex to lock the cache while we are getting a key and defer the unlocking
 func (c *Cache) Get(key string) ([]byte, bool) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
