@@ -38,10 +38,16 @@ func commandCatch(cfg *config, args ...string) error {
 	// Check if the Pokémon is caught
 	if random >= probability {
 		fmt.Println("Congratulations! You caught the Pokémon!")
+		pokeDex[catchPokemonResp.Name] = Pokemon{
+			Name:   catchPokemonResp.Name,
+			Height: catchPokemonResp.Height,
+			Weight: catchPokemonResp.Weight,
+			Stats:  catchPokemonResp.Stats,
+			Types:  catchPokemonResp.Types,
+		}
 	} else {
 		fmt.Println("Oh no! The Pokémon escaped!")
 	}
-
 	return nil
 }
 
