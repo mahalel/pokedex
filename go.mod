@@ -1,3 +1,3 @@
 module github.com/mahalel/pokedex
 
-go 1.20
+go 1.21
