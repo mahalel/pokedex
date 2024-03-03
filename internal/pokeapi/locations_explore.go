@@ -20,7 +20,12 @@ func (c *Client) GetLocationArea(locationName string) (RespLocationArea, error) 
 	if err != nil {
 		return RespLocationArea{}, err
 	}
-	defer resp.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+
+		}
+	}(resp.Body)
 
 	dat, err := io.ReadAll(resp.Body)
 	if err != nil {

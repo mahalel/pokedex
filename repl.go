@@ -27,7 +27,7 @@ func startRepl(cfg *config) {
 		}
 
 		commandName := words[0]
-		args := []string{}
+		var args []string
 
 		if len(words) > 1 {
 			args = words[1:]
@@ -80,6 +80,11 @@ func getCommands() map[string]cliCommand {
 			name:        "explore",
 			description: "Lists the pokemon in a given location",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Catching Pokemon adds them to the user's Pokedex. It takes the name of a Pokemon as an argument",
+			callback:    commandCatch,
 		},
 		"exit": {
 			name:        "exit",
